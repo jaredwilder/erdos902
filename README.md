@@ -11,18 +11,25 @@ is exactly the open question. Nothing in this repository narrows it. What this r
 provides is a kernel-checked formalisation of what is known:
 
 ```lean
-theorem erdos902_sandwich (n : ℕ) (hn : 1 ≤ n) :
-    2 ^ (n + 1) - 1 ≤ f n ∧ f n ≤ n + 3 * n ^ 2 * 2 ^ n
+theorem classical_sandwich (n : ℕ) (hn : 1 ≤ n) :
+    (n + 2) * 2 ^ (n - 1) - 1 ≤ f n ∧ f n ≤ n + 3 * n ^ 2 * 2 ^ n
 ```
 
-- **Lower bound** `2^(n+1) − 1 ≤ f(n)` — Erdős's 1963 counting argument
-  ([`Erdos902ClosedForm.lean`](Erdos902ClosedForm.lean), via the recursion
-  `f(n+1) ≥ 2·f(n)+1` in [`Erdos902Counting.lean`](Erdos902Counting.lean)).
-- **Upper bound** `f(n) ≤ n + 3n²·2^n` — the first-moment existence argument with an explicit
+- **Lower bound** `(n+2)·2^(n−1) − 1 ≤ f(n)` - the Szekeres–Szekeres bound
+  ([`Erdos902Szekeres.lean`](Erdos902Szekeres.lean)), by multiplicity amplification: asking for
+  one dominator of every (k+1)-set forces k+2 dominators of every k-set, and the multiplicity
+  survives descent into in-neighbourhoods. The formula is tight at both known exact points:
+  `n=2` gives 7 = f(2) and `n=3` gives 19 = f(3), so **`f(3) ≥ 19` is kernel-checked**
+  (`f_three_ge_19`).
+- **Upper bound** `f(n) ≤ n + 3n²·2^n` - the first-moment existence argument with an explicit
   constant ([`Erdos902Existence.lean`](Erdos902Existence.lean)). The constant is deliberately
   not optimised; the literature's sharp form is (log 2 + o(1))·n²·2^n.
+- **The 1963 bound too** - Erdős's original `2^(n+1) − 1 ≤ f(n)` is proved independently
+  ([`Erdos902ClosedForm.lean`](Erdos902ClosedForm.lean), via the recursion `f(n+1) ≥ 2·f(n)+1`
+  in [`Erdos902Counting.lean`](Erdos902Counting.lean)), and packaged with the upper bound as
+  `erdos902_sandwich` in [`Erdos902Existence.lean`](Erdos902Existence.lean).
 - **Exact small values** `f(1) = 3` (3-cycle) and `f(2) = 7` (Paley-7), each with matching
-  negative controls, by kernel evaluation — `decide`, never `native_decide`
+  negative controls, by kernel evaluation - `decide`, never `native_decide`
   ([`Erdos902Control.lean`](Erdos902Control.lean)).
 
 ## Axiom footprint
@@ -36,8 +43,8 @@ rather than asserted here.
 
 With the literature's "exactly n" phrasing of the domination property, the closed-form lower
 bound is false on degenerate instances (on an empty vertex type, "every n-set is dominated"
-is vacuously true at cardinality 0). The honest hypothesis is downward-closed — "every set of
-at most n" — and the equivalence with the literature definition (needing only n ≤ |V|) is
+is vacuously true at cardinality 0). The honest hypothesis is downward-closed - "every set of
+at most n" - and the equivalence with the literature definition (needing only n ≤ |V|) is
 proved, not assumed, in [`Erdos902ClosedForm.lean`](Erdos902ClosedForm.lean).
 
 ## Verifying
@@ -55,12 +62,12 @@ file, so a green `lake build` is a kernel check of the whole set.
 
 | file | contents |
 |---|---|
-| `Erdos902Existence.lean` | the upper bound, the unconditional lower bound, `erdos902_sandwich` |
+| `Erdos902Existence.lean` | the upper bound `n + 3n²·2^n`, the unconditional 1963 lower bound, `erdos902_sandwich` |
 | `Erdos902ClosedForm.lean` | lower bound `2^(n+1)−1`; equivalence of the two domination properties |
 | `Erdos902Counting.lean`, `Erdos902InNeighbourhood.lean` | the recursion `f(n+1) ≥ 2f(n)+1` (in-neighbourhood lemma + counting step; the lemma is Mathlib-free, axioms `{propext, Quot.sound}`) |
 | `Erdos902Control.lean` | `f(1)=3`, `f(2)=7`, negative controls, all by `decide` |
 | `Erdos902Arith.lean` | elementary arithmetic support |
-| `Erdos902Szekeres.lean` | Szekeres-style bound |
+| `Erdos902Szekeres.lean` | the Szekeres–Szekeres lower bound `(n+2)·2^(n−1) − 1`, `f_three_ge_19`, and `classical_sandwich` - the repo's headline theorem |
 | `Erdos902Barrier.lean`, `Erdos902Threshold.lean` | analytic support (log sandwich, threshold shift) |
 | `Erdos902DropAudit.lean` | audit of an externally claimed O(k·2^k) proof: the claim's switching
 lemma needs charge 8k but derives 8k²; at its own parameters no contradiction exists for k ≥ 4.
