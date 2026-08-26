@@ -1,4 +1,4 @@
-# Erdős Problem #902 (Schütte's problem) — Lean 4 formalisation of the classical bounds
+# Erdős Problem #902 (Schütte's problem) - Lean 4 formalisation of the classical bounds
 
 Machine-checked proofs, in Lean 4 against Mathlib, of both classical bounds for
 [Erdős problem #902](https://www.erdosproblems.com/902):
