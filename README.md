@@ -57,7 +57,7 @@ file, so a green `lake build` is a kernel check of the whole set.
 |---|---|
 | `Erdos902Existence.lean` | the upper bound, the unconditional lower bound, `erdos902_sandwich` |
 | `Erdos902ClosedForm.lean` | lower bound `2^(n+1)−1`; equivalence of the two domination properties |
-| `Erdos902Counting.lean` | the recursion `f(n+1) ≥ 2f(n)+1` |
+| `Erdos902Counting.lean`, `Erdos902InNeighbourhood.lean` | the recursion `f(n+1) ≥ 2f(n)+1` (in-neighbourhood lemma + counting step; the lemma is Mathlib-free, axioms `{propext, Quot.sound}`) |
 | `Erdos902Control.lean` | `f(1)=3`, `f(2)=7`, negative controls, all by `decide` |
 | `Erdos902Arith.lean` | elementary arithmetic support |
 | `Erdos902Szekeres.lean` | Szekeres-style bound |

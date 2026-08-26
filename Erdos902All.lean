@@ -12,6 +12,7 @@ import Erdos902Cover
 import Erdos902Double
 import Erdos902DropAudit
 import Erdos902Existence
+import Erdos902InNeighbourhood
 import Erdos902Interaction
 import Erdos902Mass
 import Erdos902Moment

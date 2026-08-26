@@ -2,7 +2,7 @@
 Erdos 902 — THE COUNTING STEP.
 
 The in-neighbourhood lemma (proved separately, mathlib-free, in
-oracle/math/lean/erdos902/InNeighbourhood.lean) gives: every in-degree is at least f(n-1).
+`Erdos902InNeighbourhood.lean` in this repository) gives: every in-degree is at least f(n-1).
 This file supplies the other half of the lower bound:
 
     in a tournament on N vertices, if EVERY in-degree is at least k, then N >= 2k+1.
