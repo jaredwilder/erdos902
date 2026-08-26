@@ -1,0 +1,27 @@
+/- Root module: imports every Erdos902 file so `lake build` verifies the whole set. -/
+import Erdos902Arith
+import Erdos902Barrier
+import Erdos902Bonferroni
+import Erdos902ClosedForm
+import Erdos902Codeg
+import Erdos902Conc
+import Erdos902Control
+import Erdos902Counting
+import Erdos902Coupling
+import Erdos902Cover
+import Erdos902Double
+import Erdos902DropAudit
+import Erdos902Existence
+import Erdos902Interaction
+import Erdos902Mass
+import Erdos902Moment
+import Erdos902OddBound
+import Erdos902Order
+import Erdos902Overlap
+import Erdos902Reach
+import Erdos902Rigid
+import Erdos902Source
+import Erdos902Spread
+import Erdos902Switch
+import Erdos902Szekeres
+import Erdos902Threshold
