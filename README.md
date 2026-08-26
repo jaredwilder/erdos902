@@ -6,7 +6,7 @@ Machine-checked proofs, in Lean 4 against Mathlib, of both classical bounds for
 > Let f(n) be the minimum number of vertices of a tournament in which every set of n
 > vertices is dominated by some vertex outside it. Determine the growth of f(n).
 
-**The problem itself remains open** — the gap between the bounds below (a factor of order n)
+**The problem itself remains open** - the gap between the bounds below (a factor of order n)
 is exactly the open question. Nothing in this repository narrows it. What this repository
 provides is a kernel-checked formalisation of what is known:
 
