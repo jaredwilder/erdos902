@@ -8,7 +8,9 @@ Machine-checked proofs, in Lean 4 against Mathlib, of both classical bounds for
 
 **The problem itself remains open** - the gap between the bounds below (a factor of order n)
 is exactly the open question. Nothing in this repository narrows it. What this repository
-provides is a kernel-checked formalisation of what is known:
+provides is a kernel-checked formalisation of the classical asymptotic bounds and selected
+exact small cases - it does not formalise every known finite or structural result in the
+tournament-domination literature (see the status table below):
 
 ```lean
 theorem classical_sandwich (n : ℕ) (hn : 1 ≤ n) :
@@ -31,6 +33,23 @@ theorem classical_sandwich (n : ℕ) (hn : 1 ≤ n) :
 - **Exact small values** `f(1) = 3` (3-cycle) and `f(2) = 7` (Paley-7), each with matching
   negative controls, by kernel evaluation - `decide`, never `native_decide`
   ([`Erdos902Control.lean`](Erdos902Control.lean)).
+
+## Known status beyond the formalised core
+
+In domination language: a tournament has property S_n exactly when its domination number
+exceeds n, so f(n) is the minimum order of a tournament with domination number n+1. The
+finite state of the art, and what is and is not formalised in this repository:
+
+| fact | source | status here |
+|---|---|---|
+| `f(1) = 3` | classical | formalised (`Erdos902Control.lean`) |
+| `f(2) = 7` | classical | formalised (`Erdos902Control.lean`) |
+| `f(3) = 19` | Szekeres–Szekeres 1965 | lower half `f(3) ≥ 19` formalised (`f_three_ge_19`); the matching 19-vertex tournament (Paley-19) is classical, not formalised here |
+| `48 ≤ f(4)` | Reid–McRae–Hedetniemi–Hedetniemi 2004 | known literature, not formalised here |
+| `f(4) ≤ 67` | QR₆₇ has S₄ - Reid et al. 2004; Javier–Llano–Zuazua 2026 | known literature, not formalised here |
+
+For general n the best known bounds remain `(n+2)·2^(n−1) − 1 ≤ f(n)` and `f(n) = O(n²·2^n)`
+(Jeffries 2026 records that these are still the state of the art). The factor-n gap is open.
 
 ## Axiom footprint
 
@@ -73,6 +92,17 @@ file, so a green `lake build` is a kernel check of the whole set.
 lemma needs charge 8k but derives 8k²; at its own parameters no contradiction exists for k ≥ 4.
 Both halves of the audit are kernel-checked. |
 | remaining files | supporting lemmas (moments, covers, overlap, concentration, …) |
+
+## References
+
+- P. Erdős, *On a problem in graph theory*, Math. Gaz. 47 (1963), 220–223. The original `2^(n+1) − 1` lower bound and the probabilistic upper bound.
+- G. Szekeres and E. Szekeres, *On a problem of Schütte and Erdős*, Math. Gaz. 49 (1965), 290–293. The `(n+2)·2^(n−1) − 1` lower bound.
+- J. R. Duncan and M. S. Jacobson, *On tournaments with domination number exactly k*, JCMCC 31 (1999), 129–136. Tournaments with prescribed numbers of minimum dominating sets.
+- J. Tyszkiewicz, *A simple construction for tournaments with every k players beaten by a single player*, Amer. Math. Monthly 107 (2000), 53–54.
+- M. Borowiecki, J. Grytczuk, M. Hałuszczak, Zs. Tuza, *Schütte's tournament problem and intersecting families of sets*, Combin. Probab. Comput. 12 (2003), 359–364. The bipartite variant S_{k,l}.
+- K. B. Reid, A. A. McRae, S. M. Hedetniemi, S. T. Hedetniemi, *Domination and irredundance in tournaments*, Australas. J. Combin. 29 (2004), 157–172. Proves `f(4) ≥ 48` (in the form: domination number ≥ 5 forces at least 48 vertices), plus the extremal in-neighbourhood and private-neighbour structure.
+- N. Y. Javier, B. Llano, R. Zuazua, *2- and 3-existentially closed tournaments*, Contrib. Discrete Math. 21(1) (2026). Modern derivation that QR₆₇ has S₄.
+- J. Jeffries, *Schütte's property for sets of tournaments and an application to dice games*, arXiv:2604.08790 (2026).
 
 ## License
 
