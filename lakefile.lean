@@ -16,5 +16,6 @@ lean_lib Erdos902All where
     `Erdos902Interaction, `Erdos902Mass, `Erdos902Moment, `Erdos902OddBound,
     `Erdos902Order, `Erdos902Overlap, `Erdos902QR67, `Erdos902QR67Base,
     `Erdos902QR67Case0, `Erdos902QR67Case1, `Erdos902QR67Case2, `Erdos902Reach,
+    `Erdos902Reid,
     `Erdos902Rigid, `Erdos902Source, `Erdos902Spread, `Erdos902Switch,
     `Erdos902Szekeres, `Erdos902Threshold]

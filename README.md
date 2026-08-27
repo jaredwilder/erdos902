@@ -33,11 +33,14 @@ theorem classical_sandwich (n : ℕ) (hn : 1 ≤ n) :
 - **Exact small values** `f(1) = 3` (3-cycle) and `f(2) = 7` (Paley-7), each with matching
   negative controls, by kernel evaluation - `decide`, never `native_decide`
   ([`Erdos902Control.lean`](Erdos902Control.lean)).
-- **Finite certificate** `f(4) ≤ 67`, from a kernel-checked `S₄` certificate for QR₆₇
-  ([`Erdos902QR67.lean`](Erdos902QR67.lean)). The computation is symmetry-reduced by translation
-  and square scaling; its three remaining witness tables are checked with `decide`.
+- **Known finite window** `48 ≤ f(4) ≤ 67`, now kernel-checked end to end. The lower bound
+  is in [`Erdos902Reid.lean`](Erdos902Reid.lean); the upper bound comes from an `S₄`
+  certificate for QR₆₇ ([`Erdos902QR67.lean`](Erdos902QR67.lean)). The computation is
+  symmetry-reduced by translation and square scaling; its three remaining witness tables
+  are checked with `decide`. [`QR67_CERTIFICATE.md`](QR67_CERTIFICATE.md) is the compact
+  expert-review receipt.
 
-## Known status beyond the formalised core
+## Known finite status
 
 In domination language: a tournament has property S_n exactly when its domination number
 exceeds n, so f(n) is the minimum order of a tournament with domination number n+1. The
@@ -48,7 +51,7 @@ finite state of the art, and what is and is not formalised in this repository:
 | `f(1) = 3` | classical | formalised (`Erdos902Control.lean`) |
 | `f(2) = 7` | classical | formalised (`Erdos902Control.lean`) |
 | `f(3) = 19` | Szekeres–Szekeres 1965 | lower half `f(3) ≥ 19` formalised (`f_three_ge_19`); the matching 19-vertex tournament (Paley-19) is classical, not formalised here |
-| `48 ≤ f(4)` | Reid–McRae–Hedetniemi–Hedetniemi 2004 | known literature, not formalised here |
+| `48 ≤ f(4)` | Reid–McRae–Hedetniemi–Hedetniemi 2004 | formalised (`f_four_ge_48` in `Erdos902Reid.lean`) |
 | `f(4) ≤ 67` | QR₆₇ has S₄ - Reid et al. 2004; Javier–Llano–Zuazua 2026 | formalised (`f_four_le_67` in `Erdos902QR67.lean`) |
 
 For general n the best known bounds remain `(n+2)·2^(n−1) − 1 ≤ f(n)` and `f(n) = O(n²·2^n)`
@@ -89,6 +92,8 @@ file, so a green `lake build` is a kernel check of the whole set.
 | `Erdos902Counting.lean`, `Erdos902InNeighbourhood.lean` | the recursion `f(n+1) ≥ 2f(n)+1` (in-neighbourhood lemma + counting step; the lemma is Mathlib-free, axioms `{propext, Quot.sound}`) |
 | `Erdos902Control.lean` | `f(1)=3`, `f(2)=7`, negative controls, all by `decide` |
 | `Erdos902QR67.lean` | QR₆₇ certificate for `S₄` and the finite upper bound `f(4) ≤ 67` |
+| `QR67_CERTIFICATE.md` | short QR₆₇ review receipt: symmetry reduction, witness tables, theorem chain, and axiom output |
+| `Erdos902Reid.lean` | finite lower bound `f(4) ≥ 48` and the complete window `48 ≤ f(4) ≤ 67` |
 | `Erdos902Arith.lean` | elementary arithmetic support |
 | `Erdos902Szekeres.lean` | the Szekeres–Szekeres lower bound `(n+2)·2^(n−1) − 1`, `f_three_ge_19`, and `classical_sandwich` - the repo's headline theorem |
 | `Erdos902Barrier.lean`, `Erdos902Threshold.lean` | analytic support (log sandwich, threshold shift) |
