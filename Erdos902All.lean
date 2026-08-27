@@ -19,6 +19,7 @@ import Erdos902Moment
 import Erdos902OddBound
 import Erdos902Order
 import Erdos902Overlap
+import Erdos902QR67
 import Erdos902Reach
 import Erdos902Rigid
 import Erdos902Source
