@@ -1,0 +1,28 @@
+{
+  "D": [
+    1,
+    2,
+    4
+  ],
+  "cut_count": 2,
+  "cuts": [
+    [
+      4,
+      6
+    ],
+    [
+      3,
+      6
+    ]
+  ],
+  "elapsed_seconds": 0.005265,
+  "independent_verification": "PASS",
+  "independent_verifier": "glucose42",
+  "k": 2,
+  "mode": "cegar",
+  "n": 7,
+  "sha256": "6d00267d00e4c6353c61af2369eb161076e30a651327dbae3cebc4335bba1c71",
+  "solver": "cadical195",
+  "status": "SAT_CONSTRUCTION",
+  "symmetry_break": "1 in D (valid under D -> -D)"
+}

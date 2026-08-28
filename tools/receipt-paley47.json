@@ -1,0 +1,42 @@
+{
+  "D": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9,
+    12,
+    14,
+    16,
+    17,
+    18,
+    21,
+    24,
+    25,
+    27,
+    28,
+    32,
+    34,
+    36,
+    37,
+    42
+  ],
+  "dominating_set": [
+    0,
+    4,
+    7,
+    9
+  ],
+  "elapsed_seconds": 0.002745,
+  "independent_verification": "PASS",
+  "independent_verifier": "glucose42",
+  "k": 4,
+  "mode": "check-paley",
+  "n": 47,
+  "sha256": "8d7130a8f18d571385e662f6d856be9bab54b165a49739d1108dd2e727c7ac96",
+  "solver": "cadical195",
+  "status": "COUNTEREXAMPLE"
+}

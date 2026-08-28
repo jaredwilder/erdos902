@@ -1,0 +1,23 @@
+{
+  "D": [
+    1,
+    4,
+    5,
+    6,
+    7,
+    9,
+    11,
+    16,
+    17
+  ],
+  "dominating_set": null,
+  "elapsed_seconds": 0.003429,
+  "independent_verification": "PASS",
+  "independent_verifier": "glucose42",
+  "k": 3,
+  "mode": "check-paley",
+  "n": 19,
+  "sha256": "efbc237baf62b8f61c132676a67da5031e3ba658c552dd1a15b5ed7a2cb341fb",
+  "solver": "cadical195",
+  "status": "SAT_CONSTRUCTION"
+}

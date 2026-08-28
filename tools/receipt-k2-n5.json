@@ -1,0 +1,24 @@
+{
+  "D": [],
+  "cut_count": 2,
+  "cuts": [
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "elapsed_seconds": 0.007674,
+  "independent_verification": "PASS",
+  "independent_verifier": "glucose42",
+  "k": 2,
+  "mode": "cegar",
+  "n": 5,
+  "sha256": "5aa5c1601a09d8b713911d4a7361c5f1d181b34111c6726a854e610830ccd94a",
+  "solver": "cadical195",
+  "status": "UNSAT_NO_CYCLIC_CONSTRUCTION",
+  "symmetry_break": "1 in D (valid under D -> -D)"
+}
