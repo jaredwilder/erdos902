@@ -28,6 +28,7 @@ import Erdos902Moment
 import Erdos902OddBound
 import Erdos902Order
 import Erdos902Overlap
+import Erdos902PrivateCoverBarrier
 import Erdos902QR67
 import Erdos902QR23
 import Erdos902Reid
