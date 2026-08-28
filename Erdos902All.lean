@@ -13,6 +13,8 @@ import Erdos902DRT23
 import Erdos902DRT23Design
 import Erdos902DRT23Rigidity
 import Erdos902Capacity
+import Erdos902Layer11R35
+import Erdos902Layer11R36
 import Erdos902Kings
 import Erdos902Double
 import Erdos902DropAudit

@@ -15,7 +15,7 @@ lean_lib Erdos902All where
     `Erdos902DropAudit, `Erdos902DRT23, `Erdos902DRT23Design,
     `Erdos902DRT23Rigidity,
     `Erdos902Existence, `Erdos902F4Step, `Erdos902InNeighbourhood,
-    `Erdos902Interaction, `Erdos902Kings, `Erdos902Mass, `Erdos902Moment, `Erdos902OddBound,
+    `Erdos902Interaction, `Erdos902Kings, `Erdos902Layer11R35, `Erdos902Layer11R36, `Erdos902Mass, `Erdos902Moment, `Erdos902OddBound,
     `Erdos902Order, `Erdos902Overlap, `Erdos902QR23,
     `Erdos902Capacity, `Erdos902QR67, `Erdos902QR67Base,
     `Erdos902QR67Case0, `Erdos902QR67Case1, `Erdos902QR67Case2, `Erdos902Reach,
