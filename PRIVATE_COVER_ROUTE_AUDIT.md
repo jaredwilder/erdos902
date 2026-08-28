@@ -62,15 +62,18 @@ supply those hypotheses.
   private target per covering block, so their rate bounds cannot be imported here without
   an additional tournament lemma.
 
-## The smaller live wall
+## Follow-up disposition
 
-The private-row component is burned. The remaining Round-2 question is now precisely:
+The private-row component is burned. Its immediate follow-up relaxation was:
 
 > Prove a stronger-than-Bollobás inequality for the cross-intersecting pairs
 > `(P_v, {v} union N^-(v))` using the fact that the second family is the system of
 > closed in-neighbourhoods of one tournament and that the corresponding out-neighbourhoods
 > cover every `k`-set.
 
-Any claimed exponent improvement must enter through that coupled antisymmetry condition.
-Re-running minimal-cover, private-element, generic Bollobás, cover-free-code, or ordinary
-covering-array machinery without such a coupling is now a formally closed route.
+`Erdos902FactorizationFalsifier.lean` subsequently kills even that private-witness
+factorization: odd cyclic tournaments satisfy it with only `n=2k+1` vertices. The surviving
+wall is therefore the **full global condition** that the same antisymmetric row family covers
+every `k`-set. Re-running minimal-cover, private-element, generic Bollobás, cover-free-code,
+two-step relay, or private-factorization machinery without the global cover is now a formally
+closed route.

@@ -21,6 +21,7 @@ import Erdos902Double
 import Erdos902DropAudit
 import Erdos902Existence
 import Erdos902F4Step
+import Erdos902FactorizationFalsifier
 import Erdos902InNeighbourhood
 import Erdos902Interaction
 import Erdos902Mass
