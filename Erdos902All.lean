@@ -10,6 +10,7 @@ import Erdos902Counting
 import Erdos902Coupling
 import Erdos902Cover
 import Erdos902DRT23
+import Erdos902DRT23Design
 import Erdos902Kings
 import Erdos902Double
 import Erdos902DropAudit

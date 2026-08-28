@@ -42,6 +42,46 @@ def bad4 (L : List Nat) : Nat :=
         (((List.range 23).drop (c + 1)).map fun d =>
           if (get L a &&& get L b &&& get L c &&& get L d) == 0 then 1 else 0).sum).sum).sum).sum
 
+/-- Number of internally undominated 4-sets containing a specified vertex. -/
+def bad4Through (L : List Nat) (x : Nat) : Nat :=
+  ((List.range 23).map fun a =>
+    (((List.range 23).drop (a + 1)).map fun b =>
+      (((List.range 23).drop (b + 1)).map fun c =>
+        if a != x && b != x && c != x &&
+            (get L x &&& get L a &&& get L b &&& get L c) == 0
+        then 1 else 0).sum).sum).sum
+
+/-- Number of internally undominated 4-sets containing a specified pair. -/
+def bad4ThroughPair (L : List Nat) (x y : Nat) : Nat :=
+  ((List.range 23).map fun a =>
+    (((List.range 23).drop (a + 1)).map fun b =>
+      if a != x && a != y && b != x && b != y &&
+          (get L x &&& get L y &&& get L a &&& get L b) == 0
+      then 1 else 0).sum).sum
+
+def vertexCheck (L : List Nat) (x : Nat) : Bool := bad4Through L x == 440
+
+def pairCheck (L : List Nat) (x : Nat) : Bool :=
+  ((List.range 23).drop (x + 1)).all fun y => bad4ThroughPair L x y == 60
+
+def bad4DesignCheck (L : List Nat) : Bool :=
+  vertexCheck L 0 && vertexCheck L 1 && vertexCheck L 2 &&
+  vertexCheck L 3 && vertexCheck L 4 && vertexCheck L 5 &&
+  vertexCheck L 6 && vertexCheck L 7 && vertexCheck L 8 &&
+  vertexCheck L 9 && vertexCheck L 10 && vertexCheck L 11 &&
+  vertexCheck L 12 && vertexCheck L 13 && vertexCheck L 14 &&
+  vertexCheck L 15 && vertexCheck L 16 && vertexCheck L 17 &&
+  vertexCheck L 18 && vertexCheck L 19 && vertexCheck L 20 &&
+  vertexCheck L 21 && vertexCheck L 22 && pairCheck L 0 &&
+  pairCheck L 1 && pairCheck L 2 && pairCheck L 3 &&
+  pairCheck L 4 && pairCheck L 5 && pairCheck L 6 &&
+  pairCheck L 7 && pairCheck L 8 && pairCheck L 9 &&
+  pairCheck L 10 && pairCheck L 11 && pairCheck L 12 &&
+  pairCheck L 13 && pairCheck L 14 && pairCheck L 15 &&
+  pairCheck L 16 && pairCheck L 17 && pairCheck L 18 &&
+  pairCheck L 19 && pairCheck L 20 && pairCheck L 21 &&
+  pairCheck L 22
+
 /-- Out-neighbourhood bitmasks of catalogue row 35. -/
 def om35 : List Nat := [4094, 258172, 7674200, 3901232, 5860064, 5152324, 6483336, 7643694, 2939058, 3700038, 5185942, 1529482, 1877209, 1984813, 6886573, 2453013, 2503649, 5297045, 6963803, 3377351, 4572515, 5389363, 637707]
 /-- In-neighbourhood bitmasks of catalogue row 35. -/
