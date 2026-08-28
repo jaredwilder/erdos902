@@ -12,7 +12,7 @@ lean_lib Erdos902All where
     `Erdos902All, `Erdos902Arith, `Erdos902Barrier, `Erdos902Bonferroni,
     `Erdos902ClosedForm, `Erdos902Codeg, `Erdos902Conc, `Erdos902Control,
     `Erdos902Counting, `Erdos902Coupling, `Erdos902Cover, `Erdos902Double,
-    `Erdos902DropAudit, `Erdos902DRT23, `Erdos902DRT23Design,
+    `Erdos902DropAudit, `Erdos902DRT23, `Erdos902DRT23Design, `Erdos902DominatorCube,
     `Erdos902DRT23Rigidity,
     `Erdos902Existence, `Erdos902F4Step, `Erdos902InNeighbourhood,
     `Erdos902Interaction, `Erdos902Kings, `Erdos902Layer11R35, `Erdos902Layer11R36, `Erdos902Mass, `Erdos902Moment, `Erdos902OddBound,

@@ -12,6 +12,7 @@ import Erdos902Cover
 import Erdos902DRT23
 import Erdos902DRT23Design
 import Erdos902DRT23Rigidity
+import Erdos902DominatorCube
 import Erdos902Capacity
 import Erdos902Layer11R35
 import Erdos902Layer11R36
