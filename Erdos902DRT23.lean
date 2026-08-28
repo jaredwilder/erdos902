@@ -113,6 +113,26 @@ theorem bad4_35 : bad4 im35 = 2475 := by decide
 /-- Row 36 has exactly 2530 undominated 4-sets. -/
 theorem bad4_36 : bad4 im36 = 2530 := by decide
 
+/-- Every 4-set of row 35 has at most 3 dominators inside the tournament.  For row 36 the
+bound is 2, so the inclusion-exclusion count of dominated 4-sets closes after the pair
+term; for row 35 a triple term is still needed. -/
+theorem dom_le_35 :
+    ((List.range 23).all fun a => ((List.range 23).drop (a + 1)).all fun b =>
+      ((List.range 23).drop (b + 1)).all fun c =>
+        ((List.range 23).drop (c + 1)).all fun d =>
+          POP (get im35 a &&& get im35 b &&& get im35 c &&& get im35 d) <= 3) = true := by
+  decide
+
+/-- Every 4-set of row 36 has at most 2 dominators inside the tournament.  For row 36 the
+bound is 2, so the inclusion-exclusion count of dominated 4-sets closes after the pair
+term; for row 35 a triple term is still needed. -/
+theorem dom_le_36 :
+    ((List.range 23).all fun a => ((List.range 23).drop (a + 1)).all fun b =>
+      ((List.range 23).drop (b + 1)).all fun c =>
+        ((List.range 23).drop (c + 1)).all fun d =>
+          POP (get im36 a &&& get im36 b &&& get im36 c &&& get im36 d) <= 2) = true := by
+  decide
+
 end Erdos902DRT23
 
 #print axioms Erdos902DRT23.tournament_35
@@ -124,3 +144,5 @@ end Erdos902DRT23
 #print axioms Erdos902DRT23.codeg_36
 #print axioms Erdos902DRT23.s3_36
 #print axioms Erdos902DRT23.bad4_36
+#print axioms Erdos902DRT23.dom_le_35
+#print axioms Erdos902DRT23.dom_le_36

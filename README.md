@@ -98,6 +98,7 @@ file, so a green `lake build` is a kernel check of the whole set.
 | `Erdos902Szekeres.lean` | the Szekeres–Szekeres lower bound `(n+2)·2^(n−1) − 1`, `f_three_ge_19`, and `classical_sandwich` - the repo's headline theorem |
 | `Erdos902F4Step.lean` | the analytic reduction for a hypothetical 48-vertex `S_4` tournament: in-degree exactly 23 somewhere, that in-neighbourhood inherits `S_3` and is doubly regular (23, 11, 5), and the two constraints an outside vertex obeys (beats at most 12 of it, meets each internal in-neighbourhood in at most 6) |
 | `Erdos902DRT23.lean` | the two doubly regular tournaments of order 23 with `S_3` (McKay catalogue rows 35 and 36), encoded as bitmask tables: tournament and transpose checks, parameters (23, 11, 5), `S_3`, and undominated-4-set counts 2475 and 2530, all by `decide` |
+| `Erdos902Kings.lean` | order-minimal extremizers are all kings: if `S_n` holds and deleting any vertex destroys it, every vertex is the unique dominator of some `n`-set (`critical_of_deletion`) and therefore reaches every other vertex in two steps (`king_of_critical`) |
 | `Erdos902Barrier.lean`, `Erdos902Threshold.lean` | analytic support (log sandwich, threshold shift) |
 | `Erdos902DropAudit.lean` | audit of an externally claimed O(k·2^k) proof: the claim's switching
 lemma needs charge 8k but derives 8k²; at its own parameters no contradiction exists for k ≥ 4.
