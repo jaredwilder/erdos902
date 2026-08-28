@@ -96,6 +96,7 @@ file, so a green `lake build` is a kernel check of the whole set.
 | `Erdos902Reid.lean` | finite lower bound `f(4) ≥ 48` and the complete window `48 ≤ f(4) ≤ 67` |
 | `Erdos902Arith.lean` | elementary arithmetic support |
 | `Erdos902Szekeres.lean` | the Szekeres–Szekeres lower bound `(n+2)·2^(n−1) − 1`, `f_three_ge_19`, and `classical_sandwich` - the repo's headline theorem |
+| `Erdos902F4Step.lean` | the analytic reduction for a hypothetical 48-vertex `S_4` tournament: in-degree exactly 23 somewhere, that in-neighbourhood inherits `S_3` and is doubly regular (23, 11, 5), and the two constraints an outside vertex obeys (beats at most 12 of it, meets each internal in-neighbourhood in at most 6) |
 | `Erdos902Barrier.lean`, `Erdos902Threshold.lean` | analytic support (log sandwich, threshold shift) |
 | `Erdos902DropAudit.lean` | audit of an externally claimed O(k·2^k) proof: the claim's switching
 lemma needs charge 8k but derives 8k²; at its own parameters no contradiction exists for k ≥ 4.

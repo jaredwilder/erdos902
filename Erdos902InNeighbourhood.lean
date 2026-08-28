@@ -11,6 +11,8 @@ the in-neighbourhood of `v` (the vertices that beat `v`) has S_(n-1).
 No mathlib: `List` and `Nodup` are Lean core, so the axiom footprint stays minimal.
 -/
 
+namespace Erdos902InNbhd
+
 /-- `HasS T n`: every `n`-element duplicate-free list of vertices is dominated by
     some vertex outside it. -/
 def HasS {V : Type} (T : V → V → Prop) (n : Nat) : Prop :=
@@ -54,3 +56,5 @@ theorem inNbhd_hasS {V : Type} (T : V → V → Prop)
     exact hubeats s.val (List.mem_cons_of_mem _ (List.mem_map_of_mem hs))
 
 #print axioms inNbhd_hasS
+
+end Erdos902InNbhd

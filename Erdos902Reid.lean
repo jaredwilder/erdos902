@@ -27,7 +27,7 @@ abbrev outN (v : V) : Finset V := Erdos902Mass.outN T v
 
 /-- Two nested multiplicity-preserving descents give the published lower bound 11
 for every pairwise common in-neighbourhood. -/
-private theorem pair_common_in_ge_eleven (hT : IsTournament T)
+theorem pair_common_in_ge_eleven (hT : IsTournament T)
     (H3 : Erdos902Szekeres.HasSleM T 3 5) (x y : V) (hxy : x ≠ y) :
     11 ≤ ((inN T x) ∩ (inN T y)).card := by
   rcases hT.total x y hxy with hxy' | hyx'
