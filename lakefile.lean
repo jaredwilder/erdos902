@@ -13,6 +13,7 @@ lean_lib Erdos902All where
     `Erdos902ClosedForm, `Erdos902Codeg, `Erdos902Conc, `Erdos902Control,
     `Erdos902Counting, `Erdos902Coupling, `Erdos902Cover, `Erdos902Double,
     `Erdos902DropAudit, `Erdos902DRT23, `Erdos902DRT23Design,
+    `Erdos902DRT23Rigidity,
     `Erdos902Existence, `Erdos902F4Step, `Erdos902InNeighbourhood,
     `Erdos902Interaction, `Erdos902Kings, `Erdos902Mass, `Erdos902Moment, `Erdos902OddBound,
     `Erdos902Order, `Erdos902Overlap, `Erdos902QR67, `Erdos902QR67Base,
