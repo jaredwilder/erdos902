@@ -39,6 +39,11 @@ theorem classical_sandwich (n : ℕ) (hn : 1 ≤ n) :
   symmetry-reduced by translation and square scaling; its three remaining witness tables
   are checked with `decide`. [`QR67_CERTIFICATE.md`](QR67_CERTIFICATE.md) is the compact
   expert-review receipt.
+- **Exact order-49 Cayley elimination.** Frozen monolithic SAT encodings, independently
+  solved and then checked with `drat-trim`, prove that neither a Cayley tournament on
+  `Z/49Z` nor one on `F_7^2` has `S₄`. This does **not** decide arbitrary 49-vertex
+  tournaments. [`ORDER49_MONOLITHIC_ASSAULT.md`](ORDER49_MONOLITHIC_ASSAULT.md) records
+  the formula dimensions, hashes, proof-checker receipts, and the boundary of the result.
 
 ## Known finite status
 
@@ -93,6 +98,7 @@ file, so a green `lake build` is a kernel check of the whole set.
 | `Erdos902Control.lean` | `f(1)=3`, `f(2)=7`, negative controls, all by `decide` |
 | `Erdos902QR67.lean` | QR₆₇ certificate for `S₄` and the finite upper bound `f(4) ≤ 67` |
 | `QR67_CERTIFICATE.md` | short QR₆₇ review receipt: symmetry reduction, witness tables, theorem chain, and axiom output |
+| `ORDER49_MONOLITHIC_ASSAULT.md`, `tools/order49_*` | reproducible monolithic order-49 search: verified UNSAT certificates for both Cayley groups, plus the generator and receipt for the still-undecided unrestricted instance |
 | `Erdos902Reid.lean` | finite lower bound `f(4) ≥ 48` and the complete window `48 ≤ f(4) ≤ 67` |
 | `Erdos902Arith.lean` | elementary arithmetic support |
 | `Erdos902Szekeres.lean` | the Szekeres–Szekeres lower bound `(n+2)·2^(n−1) − 1`, `f_three_ge_19`, and `classical_sandwich` - the repo's headline theorem |

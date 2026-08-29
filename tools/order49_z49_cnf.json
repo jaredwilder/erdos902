@@ -1,0 +1,14 @@
+{
+  "schema": "erdos902.order49-z49-monolithic-cnf.v1",
+  "n": 49,
+  "k": 4,
+  "translation_orbits": 4324,
+  "orientation_variables": 24,
+  "selector_variables": 194580,
+  "variables": 194604,
+  "clauses": 782645,
+  "symmetry": "1 in D (valid under D -> -D)",
+  "cnf": "C:\\Users\\jared\\erdos902\\tools\\order49_z49.cnf",
+  "cnf_sha256": "d15829cf03883fce2aeda87093b782ef5bc05b5a3562d0db26d4296fc29667d6",
+  "build_seconds": 0.8163659999991069
+}

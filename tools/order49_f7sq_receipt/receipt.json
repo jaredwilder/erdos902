@@ -1,0 +1,19 @@
+{
+  "clauses": 782645,
+  "cnf_sha256": "8f471ccb36a8d1b3aeba034e30b4298e229205577f9f636ff0825ae654272bb2",
+  "encoding": "monolithic translation-quotiented exact witness selectors",
+  "group": "F_7^2",
+  "independent_agreement": true,
+  "independent_solver": "glucose42",
+  "independent_solver_seconds": 808.500622,
+  "k": 4,
+  "order": 49,
+  "primary_variables": 24,
+  "solver": "cadical195",
+  "solver_seconds": 99.24701,
+  "status": "UNSAT_NO_F7SQ_CAYLEY_S4",
+  "symmetry_break": "first inverse-pair representative is in D (D -> -D)",
+  "total_seconds": 909.61291,
+  "translation_orbits": 4324,
+  "variables": 194604
+}

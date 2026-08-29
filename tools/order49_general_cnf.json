@@ -1,0 +1,15 @@
+{
+  "clauses": 38349557,
+  "cnf": "D:\\erdos902-order49-general\\order49_general.cnf",
+  "cnf_sha256": "2de45dca43fc37607a8c78069b29bb006a8818848408c4195f21544a041e619a",
+  "edge_variables": 1176,
+  "encoding": "full monolithic exact witness selectors",
+  "four_set_targets": 211876,
+  "generation_seconds": 53.886554,
+  "k": 4,
+  "order": 49,
+  "schema": "erdos902.order49-general-monolithic-cnf.v1",
+  "selector_variables": 9534420,
+  "symmetry_break": "vertex relabeling fixes arc 0 -> 1",
+  "variables": 9535596
+}

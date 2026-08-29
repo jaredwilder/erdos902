@@ -1,0 +1,22 @@
+{
+  "schema": "erdos902.order49-z49-monolithic-result.v1",
+  "n": 49,
+  "k": 4,
+  "solver": "cadical195",
+  "result": "UNSAT",
+  "cnf": "C:\\Users\\jared\\erdos902\\tools\\order49_z49.cnf",
+  "cnf_sha256": "d15829cf03883fce2aeda87093b782ef5bc05b5a3562d0db26d4296fc29667d6",
+  "python": "3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "load_seconds": 0.7143400999921141,
+  "solve_seconds": 98.95769039999868,
+  "solver_stats": {
+    "restarts": 1536,
+    "conflicts": 50223,
+    "decisions": 57468,
+    "propagations": 664350008
+  },
+  "proof": "C:\\Users\\jared\\erdos902\\tools\\order49_z49_cadical195.drat",
+  "proof_sha256": "16c75bddaf1ecc704a836a8766bbd47ccf5b246327b9f1811717633fe861f86c",
+  "proof_lines": 952399
+}
