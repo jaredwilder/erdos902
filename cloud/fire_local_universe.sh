@@ -12,23 +12,39 @@ CXX="${CXX:-g++}"
 THREADS="${THREADS:-$(nproc)}"
 export OMP_NUM_THREADS="$THREADS"
 
+echo "=== BUILDING LOCAL-UNIVERSE AUDITOR ==="
 $CXX -O3 -march=native -fopenmp -std=c++20 \
   tools/f4_local_universe.cpp -o cloud_runs/f4_local_universe/f4_local_universe
+echo "=== BUILD PASS / threads=$OMP_NUM_THREADS ==="
 
 run_row() {
   local row="$1"
-  echo "=== ROW $row / OMP_NUM_THREADS=$OMP_NUM_THREADS ==="
-  /usr/bin/time -v -o "cloud_runs/f4_local_universe/row${row}.time.txt" \
+  local out="cloud_runs/f4_local_universe/row${row}.json"
+  local tim="cloud_runs/f4_local_universe/row${row}.time.txt"
+  echo "=== ROW $row / EXHAUSTIVE 2^23 MASK AUDIT / OMP_NUM_THREADS=$OMP_NUM_THREADS ==="
+
+  # Keep stdout pristine JSON while giving the terminal a visible heartbeat.
+  /usr/bin/time -v -o "$tim" \
     cloud_runs/f4_local_universe/f4_local_universe --row "$row" \
-    | tee "cloud_runs/f4_local_universe/row${row}.json"
-  sha256sum "cloud_runs/f4_local_universe/row${row}.json" \
-    > "cloud_runs/f4_local_universe/row${row}.sha256"
+    > "$out" &
+  local pid=$!
+  while kill -0 "$pid" 2>/dev/null; do
+    sleep 5
+    if kill -0 "$pid" 2>/dev/null; then
+      echo "row $row still running... pid=$pid utc=$(date -u +%H:%M:%S) cpu_threads=$OMP_NUM_THREADS"
+    fi
+  done
+  wait "$pid"
+
+  cat "$out"
+  sha256sum "$out" > "cloud_runs/f4_local_universe/row${row}.sha256"
+  echo "=== ROW $row COMPLETE ==="
 }
 
 run_row 35
 run_row 36
 
-python - <<'PY'
+python3 - <<'PY'
 import json
 from pathlib import Path
 root=Path('cloud_runs/f4_local_universe')
