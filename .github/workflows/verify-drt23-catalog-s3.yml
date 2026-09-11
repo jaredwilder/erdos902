@@ -1,0 +1,28 @@
+name: Verify McKay DRT23 S3 classification
+
+on:
+  push:
+    paths:
+      - 'tools/verify_drt23_catalog_s3.py'
+      - '.github/workflows/verify-drt23-catalog-s3.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download and verify complete DRT23 catalogue
+        run: |
+          python tools/verify_drt23_catalog_s3.py --out drt23_s3_receipt.json | tee drt23_s3_receipt.log
+      - name: Upload receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: drt23-s3-classification-replay
+          path: |
+            drt23_s3_receipt.json
+            drt23_s3_receipt.log
