@@ -1,129 +1,161 @@
-# Erdős Problem #902 (Schütte's problem) — kernel-checked tournament theory and finite structure
+# Erdős #902 — Schütte's tournament problem
 
-A Lean 4 / Mathlib program on [Erdős problem #902](https://www.erdosproblems.com/902), now spanning **the classical asymptotic sandwich, exact small cases, the finite window `48 ≤ f(4) ≤ 67`, exact order-49 Cayley eliminations, DRT(23) structure, QR23 affine symmetry, repair-capacity theorems, dominator cubes, private-cover barriers, and factorization falsifiers.**
+Let `f(n)` be the minimum number of vertices in a tournament in which every `n`-set is dominated by some vertex outside it. Erdős #902 asks for the growth of `f(n)`.
 
-> Let f(n) be the minimum number of vertices of a tournament in which every set of n
-> vertices is dominated by some vertex outside it. Determine the growth of f(n).
+This repository develops the problem in Lean 4 and exact finite computation: asymptotic bounds, small cases, the window for `f(4)`, order-49 Cayley eliminations, doubly regular tournament structure at order 23, and several structural reductions.
 
-The general asymptotic factor-`n` gap remains open. The repository's contribution is the formal and structural mathematics listed below; that larger asymptotic status does not downgrade the exact finite theorems and reductions proved inside the program.
+## Classical bounds in Lean
 
-The kernel-checked classical sandwich is:
+The main formal theorem is
 
 ```lean
 theorem classical_sandwich (n : ℕ) (hn : 1 ≤ n) :
-    (n + 2) * 2 ^ (n - 1) - 1 ≤ f n ∧ f n ≤ n + 3 * n ^ 2 * 2 ^ n
+    (n + 2) * 2 ^ (n - 1) - 1 ≤ f n ∧
+    f n ≤ n + 3 * n ^ 2 * 2 ^ n
 ```
 
-- **Lower bound** `(n+2)·2^(n−1) − 1 ≤ f(n)` - the Szekeres–Szekeres bound
-  ([`Erdos902Szekeres.lean`](Erdos902Szekeres.lean)), by multiplicity amplification: asking for
-  one dominator of every (k+1)-set forces k+2 dominators of every k-set, and the multiplicity
-  survives descent into in-neighbourhoods. The formula is tight at both known exact points:
-  `n=2` gives 7 = f(2) and `n=3` gives 19 = f(3), so **`f(3) ≥ 19` is kernel-checked**
-  (`f_three_ge_19`).
-- **Upper bound** `f(n) ≤ n + 3n²·2^n` - the first-moment existence argument with an explicit
-  constant ([`Erdos902Existence.lean`](Erdos902Existence.lean)). The constant is deliberately
-  not optimised; the literature's sharp form is (log 2 + o(1))·n²·2^n.
-- **The 1963 bound too** - Erdős's original `2^(n+1) − 1 ≤ f(n)` is proved independently
-  ([`Erdos902ClosedForm.lean`](Erdos902ClosedForm.lean), via the recursion `f(n+1) ≥ 2·f(n)+1`
-  in [`Erdos902Counting.lean`](Erdos902Counting.lean)), and packaged with the upper bound as
-  `erdos902_sandwich` in [`Erdos902Existence.lean`](Erdos902Existence.lean).
-- **Exact small values** `f(1) = 3` (3-cycle) and `f(2) = 7` (Paley-7), each with matching
-  negative controls, by kernel evaluation - `decide`, never `native_decide`
-  ([`Erdos902Control.lean`](Erdos902Control.lean)).
-- **Known finite window** `48 ≤ f(4) ≤ 67`, now kernel-checked end to end. The lower bound
-  is in [`Erdos902Reid.lean`](Erdos902Reid.lean); the upper bound comes from an `S₄`
-  certificate for QR₆₇ ([`Erdos902QR67.lean`](Erdos902QR67.lean)). The computation is
-  symmetry-reduced by translation and square scaling; its three remaining witness tables
-  are checked with `decide`. [`QR67_CERTIFICATE.md`](QR67_CERTIFICATE.md) is the compact
-  expert-review receipt.
-- **Exact order-49 Cayley elimination.** Frozen monolithic SAT encodings, independently
-  solved and then checked with `drat-trim`, prove that neither a Cayley tournament on
-  `Z/49Z` nor one on `F_7^2` has `S₄`. This is an exact elimination of those two Cayley
-  families. [`ORDER49_MONOLITHIC_ASSAULT.md`](ORDER49_MONOLITHIC_ASSAULT.md) records
-  the formula dimensions, hashes, proof-checker receipts, and the unrestricted boundary.
+The lower bound is the Szekeres–Szekeres bound
 
-## Known finite status
+\[
+(n+2)2^{n-1}-1\le f(n),
+\]
 
-In domination language: a tournament has property S_n exactly when its domination number
-exceeds n, so f(n) is the minimum order of a tournament with domination number n+1. The
-finite state of the art, and the portion formalised in this repository:
+proved by multiplicity amplification and descent through in-neighbourhoods.
 
-| fact | source | status here |
-|---|---|---|
-| `f(1) = 3` | classical | formalised (`Erdos902Control.lean`) |
-| `f(2) = 7` | classical | formalised (`Erdos902Control.lean`) |
-| `f(3) = 19` | Szekeres–Szekeres 1965 | lower half `f(3) ≥ 19` formalised (`f_three_ge_19`); the matching 19-vertex tournament (Paley-19) is classical, not formalised here |
-| `48 ≤ f(4)` | Reid–McRae–Hedetniemi–Hedetniemi 2004 | formalised (`f_four_ge_48` in `Erdos902Reid.lean`) |
-| `f(4) ≤ 67` | QR₆₇ has S₄ - Reid et al. 2004; Javier–Llano–Zuazua 2026 | formalised (`f_four_le_67` in `Erdos902QR67.lean`) |
+The upper bound
 
-For general n the best known bounds remain `(n+2)·2^(n−1) − 1 ≤ f(n)` and `f(n) = O(n²·2^n)`
-(Jeffries 2026 records that these are still the state of the art). The factor-n gap is open.
+\[
+f(n)\le n+3n^2 2^n
+\]
 
-## Axiom footprint
+is an explicit first-moment existence argument. The constant is not optimized.
 
-Every headline theorem closes over exactly `{propext, Classical.choice, Quot.sound}` —
-Mathlib's standard three. No `sorry`, no extra axioms, no `native_decide`. Each file ends
-with `#print axioms` for its main results, so the footprint is printed at compile time
-rather than asserted here.
+Erdős's original 1963 lower bound
 
-## A formalisation note
+\[
+2^{n+1}-1\le f(n)
+\]
 
-With the literature's "exactly n" phrasing of the domination property, the closed-form lower
-bound is false on degenerate instances (on an empty vertex type, "every n-set is dominated"
-is vacuously true at cardinality 0). The hypothesis used here is downward-closed - "every set of
-at most n" - and the equivalence with the literature definition (needing only n ≤ |V|) is
-proved in [`Erdos902ClosedForm.lean`](Erdos902ClosedForm.lean).
+is also formalized independently.
 
-## Verifying
+## Exact and finite results
+
+The repository formalizes:
+
+- `f(1)=3`;
+- `f(2)=7`;
+- `f(3)>=19` from the Szekeres–Szekeres theorem;
+- the complete current finite window
+
+  \[
+  \boxed{48\le f(4)\le67};
+  \]
+
+- a QR67 certificate proving the upper bound;
+- exact elimination of the two order-49 Cayley families on `Z/49Z` and `F_7^2` by SAT with checked DRAT certificates.
+
+The two Cayley eliminations are construction-family results; the unrestricted order-49 case is a separate question.
+
+## The order-48 boundary and DRT(23)
+
+For a hypothetical 48-vertex `S_4` tournament, the formal reduction forces an in-neighbourhood of size 23 that inherits `S_3` and is a doubly regular tournament with parameters `(23,11,5)`.
+
+The two relevant DRT(23) classes are encoded exactly. The formal development proves, among other things:
+
+- their tournament and parameter identities;
+- `S_3` for both rows;
+- exact counts of undominated four-sets;
+- for one class, a `2-(23,4,60)` design on the bad four-sets;
+- rigidity of admissible 12-sets;
+- exact repair-capacity bounds for the top two mask layers;
+- an explicit identification of one class with the Paley tournament `QR_23`;
+- the affine automorphisms generated by translation and multiplication by 2.
+
+These results live in `Erdos902DRT23*.lean`, `Erdos902Capacity.lean`, and `Erdos902QR23.lean`.
+
+## Structural reductions
+
+Several general tournament lemmas are formalized beyond the finite `f(4)` program.
+
+### Dominator cubes
+
+For a `k`-set `P` in an `S_k` tournament, let
+
+\[
+D_R=\operatorname{dom}(P\setminus R).
+\]
+
+The Boolean faces satisfy
+
+\[
+D_R\cap D_S=D_{R\cap S},
+\]
+
+and each face carries the corresponding smaller domination property. Failure-set encoding converts face membership into subset containment.
+
+### Minimality and private witnesses
+
+Order-minimal extremizers are kings: every vertex is the unique dominator of some `n`-set and reaches every other vertex in at most two steps.
+
+Private ownership is equivalent to irredundancy of finite covers, giving a Bollobás-style cross-intersecting set-pair structure for private tournament witnesses.
+
+### Factorization falsifier
+
+A cyclic tournament family on `2k+1` vertices satisfies the relaxed private-witness Boolean factorization. Therefore that relaxation alone permits linear-size examples and cannot imply an exponential lower bound without using the full global `S_k` covering condition.
+
+## Verification
+
+All headline Lean theorems have axiom footprint
+
+```text
+{propext, Classical.choice, Quot.sound}
+```
+
+with no `sorry` and no `native_decide` in the counted results.
+
+Build the complete project with
 
 ```bash
-elan toolchain install $(cat lean-toolchain)   # leanprover/lean4:v4.31.0-rc1
-lake exe cache get                              # fetch Mathlib oleans
-lake build                                      # builds Erdos902All → every file
+elan toolchain install $(cat lean-toolchain)
+lake exe cache get
+lake build
 ```
 
-Mathlib is pinned by `lake-manifest.json`. The root module `Erdos902All.lean` imports every
-file, so a green `lake build` is a kernel check of the whole set.
+`Erdos902All.lean` imports the full formal development.
 
-## Layout
+## Reading map
 
-| file | contents |
+| file | content |
 |---|---|
-| `Erdos902Existence.lean` | the upper bound `n + 3n²·2^n`, the unconditional 1963 lower bound, `erdos902_sandwich` |
-| `Erdos902ClosedForm.lean` | lower bound `2^(n+1)−1`; equivalence of the two domination properties |
-| `Erdos902Counting.lean`, `Erdos902InNeighbourhood.lean` | the recursion `f(n+1) ≥ 2f(n)+1` (in-neighbourhood lemma + counting step; the lemma is Mathlib-free, axioms `{propext, Quot.sound}`) |
-| `Erdos902Control.lean` | `f(1)=3`, `f(2)=7`, negative controls, all by `decide` |
-| `Erdos902QR67.lean` | QR₆₇ certificate for `S₄` and the finite upper bound `f(4) ≤ 67` |
-| `QR67_CERTIFICATE.md` | short QR₆₇ review receipt: symmetry reduction, witness tables, theorem chain, and axiom output |
-| `ORDER49_MONOLITHIC_ASSAULT.md`, `tools/order49_*` | reproducible monolithic order-49 search: verified UNSAT certificates for both Cayley groups, plus the generator and receipt for the still-undecided unrestricted instance |
-| `Erdos902Reid.lean` | finite lower bound `f(4) ≥ 48` and the complete window `48 ≤ f(4) ≤ 67` |
-| `Erdos902Arith.lean` | elementary arithmetic support |
-| `Erdos902Szekeres.lean` | the Szekeres–Szekeres lower bound `(n+2)·2^(n−1) − 1`, `f_three_ge_19`, and `classical_sandwich` - the repo's headline asymptotic theorem |
-| `Erdos902F4Step.lean` | the analytic reduction for a hypothetical 48-vertex `S_4` tournament: in-degree exactly 23 somewhere, that in-neighbourhood inherits `S_3` and is doubly regular (23, 11, 5), and the two constraints an outside vertex obeys (beats at most 12 of it, meets each internal in-neighbourhood in at most 6) |
-| `Erdos902DRT23.lean`, `Erdos902DRT23Design.lean` | the two doubly regular tournaments of order 23 with `S_3` (McKay catalogue rows 35 and 36), encoded as bitmask tables: tournament and transpose checks, parameters (23, 11, 5), `S_3`, undominated-4-set counts 2475 and 2530, and the row-36 bad sets forming a `2-(23,4,60)` design (440 blocks through each vertex), all by `decide` |
-| `Erdos902DRT23Rigidity.lean` | general DRT(23,11,5) rigidity: every 12-set meeting each in-neighbourhood in at most 6 vertices is uniquely a closed out-neighbourhood `insert s (outN s)`, reducing that boundary layer from `C(23,12)` candidates to 23 |
-| `Erdos902Layer11R35.lean`, `Erdos902Layer11R36.lean` | the size-11 mask layer for each row: every admissible 11-mask has some `h` with `|M n N+(h)| >= 10`, so it agrees with an out-neighbourhood in all but one vertex. 91 kernel-checked subtree searches per row, split by the two smallest mask elements, about 1.53 million nodes each |
-| `Erdos902Capacity.lean` | repair capacities of the top two mask layers of both rows: size-12 closed out-neighbourhoods (row 36 exactly 66, row 35 at most 65), size-11 centre deletions (0 in both rows), size-11 arc deletions (row 36 exactly 48, row 35 at most 48), and the 33 row-35 admissible 11-masks lying in no closed out-neighbourhood, with capacity at most 50 |
-| `Erdos902QR23.lean` | McKay row 36 is the Paley tournament QR₂₃: an explicit relabelling checked on all 529 ordered pairs, the two affine generators (translation by 1, multiplication by 2) with their exact orders 23 and 11, and the 253 affine maps shown distinct and each a composition of the generators |
-| `Erdos902Kings.lean` | order-minimal extremizers are all kings: if `S_n` holds and deleting any vertex destroys it, every vertex is the unique dominator of some `n`-set (`critical_of_deletion`) and therefore reaches every other vertex in two steps (`king_of_critical`) |
-| `Erdos902DominatorCube.lean` | dominator-cube structure: for a `k`-set `P` in an `S_k` tournament, every Boolean face `D_R = dom(P \\ R)` with `R ⊆ P` carries `S_|R|`; faces satisfy `D_R ∩ D_S = D_(R ∩ S)`, and failure sets turn face membership into subset containment. For a private witness, its unique dominator has empty failure set and every other vertex has a nonempty one |
-| `Erdos902PrivateCoverBarrier.lean`, `PRIVATE_COVER_ROUTE_AUDIT.md` | private ownership is exactly irredundancy for finite covers, so every minimum cover already has private targets; private tournament witnesses also form a Bollobás cross-intersecting set-pair system. This kills generic private-cover/set-pair machinery as an exponent-improvement route and isolates self-indexed antisymmetry as the remaining live wall |
-| `Erdos902FactorizationFalsifier.lean`, `FACTORIZATION_RELAXATION_KILLED.md` | arbitrary-parameter counterfamily killing the private-witness Boolean-factorization relaxation: the cyclic tournament on `2k+1` vertices, with each witness equal to its `k` out-neighbours, satisfies the exact anti-identity factorization. Thus that relaxation permits `n=2k+1` and cannot imply any exponential lower bound without the full global `S_k` covering condition |
-| `Erdos902Barrier.lean`, `Erdos902Threshold.lean` | analytic support (log sandwich, threshold shift) |
-| `Erdos902DropAudit.lean` | audit of an externally claimed `O(k·2^k)` proof: the switching lemma needs charge `8k` but derives `8k²`; at its own parameters no contradiction exists for `k ≥ 4`. Both halves of the audit are kernel-checked. |
-| remaining files | supporting lemmas (moments, covers, overlap, concentration, …) |
+| `Erdos902Szekeres.lean` | Szekeres–Szekeres lower bound and `classical_sandwich` |
+| `Erdos902Existence.lean` | explicit probabilistic upper bound |
+| `Erdos902ClosedForm.lean` | Erdős 1963 lower bound and formulation equivalence |
+| `Erdos902Control.lean` | exact `f(1)=3`, `f(2)=7` |
+| `Erdos902Reid.lean` | `f(4)>=48` |
+| `Erdos902QR67.lean` | QR67 certificate and `f(4)<=67` |
+| `ORDER49_MONOLITHIC_ASSAULT.md` | checked order-49 Cayley eliminations |
+| `Erdos902F4Step.lean` | reduction of a hypothetical 48-vertex `S_4` tournament |
+| `Erdos902DRT23*.lean` | exact order-23 doubly regular tournament structure |
+| `Erdos902QR23.lean` | QR23 identification and affine symmetry |
+| `Erdos902Capacity.lean` | repair capacities |
+| `Erdos902DominatorCube.lean` | Boolean dominator-cube structure |
+| `Erdos902PrivateCoverBarrier.lean` | private-cover and set-pair reductions |
+| `Erdos902FactorizationFalsifier.lean` | cyclic counterfamily to the relaxed factorization route |
+| `Erdos902DropAudit.lean` | formal audit of an insufficient switching argument |
+
+## Status
+
+The general factor-`n` gap between the lower and upper asymptotic bounds remains open. The exact finite and structural theorems above are independent results within that larger problem.
 
 ## References
 
-- P. Erdős, *On a problem in graph theory*, Math. Gaz. 47 (1963), 220–223. The original `2^(n+1) − 1` lower bound and the probabilistic upper bound.
-- G. Szekeres and E. Szekeres, *On a problem of Schütte and Erdős*, Math. Gaz. 49 (1965), 290–293. The `(n+2)·2^(n−1) − 1` lower bound.
-- J. R. Duncan and M. S. Jacobson, *On tournaments with domination number exactly k*, JCMCC 31 (1999), 129–136. Tournaments with prescribed numbers of minimum dominating sets.
-- J. Tyszkiewicz, *A simple construction for tournaments with every k players beaten by a single player*, Amer. Math. Monthly 107 (2000), 53–54.
-- M. Borowiecki, J. Grytczuk, M. Hałuszczak, Zs. Tuza, *Schütte's tournament problem and intersecting families of sets*, Combin. Probab. Comput. 12 (2003), 359–364. The bipartite variant S_{k,l}.
-- K. B. Reid, A. A. McRae, S. M. Hedetniemi, S. T. Hedetniemi, *Domination and irredundance in tournaments*, Australas. J. Combin. 29 (2004), 157–172. Proves `f(4) ≥ 48` (in the form: domination number ≥ 5 forces at least 48 vertices), plus the extremal in-neighbourhood and private-neighbour structure.
-- N. Y. Javier, B. Llano, R. Zuazua, *2- and 3-existentially closed tournaments*, Contrib. Discrete Math. 21(1) (2026). Modern derivation that QR₆₇ has S₄.
-- J. Jeffries, *Schütte's property for sets of tournaments and an application to dice games*, arXiv:2604.08790 (2026).
+- P. Erdős, *On a problem in graph theory*, Math. Gaz. 47 (1963), 220–223.
+- G. Szekeres and E. Szekeres, *On a problem of Schütte and Erdős*, Math. Gaz. 49 (1965), 290–293.
+- K. B. Reid, A. A. McRae, S. M. Hedetniemi, S. T. Hedetniemi, *Domination and irredundance in tournaments*, Australas. J. Combin. 29 (2004), 157–172.
+- N. Y. Javier, B. Llano, R. Zuazua, *2- and 3-existentially closed tournaments*, Contrib. Discrete Math. 21(1) (2026).
 
 ## License
 
-Apache 2.0, following Mathlib.
+Apache-2.0.
+
+Author: Jared Wilder.
