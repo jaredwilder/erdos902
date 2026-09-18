@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this formalization or its computational results, please cite it using the metadata below."
+type: software
+title: "Erdos #902: Schuette's tournament problem"
+authors:
+  - family-names: "Wilder"
+    given-names: "Jared"
+repository-code: "https://github.com/jaredwilder/erdos902"
+license: "Apache-2.0"
